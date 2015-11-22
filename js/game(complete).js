@@ -1,35 +1,35 @@
 'use strict';
 
-    var screenWidth = 1000;
-    var screenHeight = 400;
+    var canvasWidth = 1000;
+    var canvasHeight = 400;
     var hitCounter = 0;
 
 // When the DOM has loaded
 $(document).ready(function() {
 
     // Initialize Crafty
-    Crafty.init(screenWidth,screenHeight).canvas.init();
+    Crafty.init(canvasWidth,canvasHeight).canvas.init();
     Crafty.background("black");
 
     // Creeate player entity
-    var player = Crafty.e("Player,2D, Canvas, Color, Twoway, Gravity, Collision")
+    var player = Crafty.e("Player,2D, Canvas, Color, Twoway, Gravity")
         .color("yellow")
         .twoway(10)
         .gravity('Floor')
         .gravityConst(3)
-        .attr({w:50, h:50, x:10, y:320})
+        .attr({w:50, h:50, x:500, y:320})
 
     // Create floor entity
-    var floor = Crafty.e("Floor,2D, Canvas, Color, Collision")
+    var floor = Crafty.e("Floor,2D, Canvas, Color")
         .color("gray")
-        .attr({h:30, w:1000, x:0, y:370 })
+        .attr({w:900, h:30,  x:50, y:370 })
 
     // Create text that shows hit count
     var hitText = Crafty.e('2D, DOM, Text')
         .textColor('white')
         .text('Hit:' + hitCounter)
         .attr({
-            x: screenWidth - 70,
+            x: canvasWidth - 70,
             y: 10
         })
         .textFont({
@@ -41,7 +41,7 @@ $(document).ready(function() {
 function drop()
 {   
     // Randomize the x-postition of the rain drop
-    var randomx = Math.floor((Math.random() * screenWidth) + 50);
+    var randomx = Math.floor((Math.random() * canvasWidth));
 
     // Create rain drop entity
     Crafty.e('Drop, 2D, Canvas, Color, Solid, Gravity, Collision')
@@ -60,7 +60,7 @@ function drop()
             // if the hit counter becomes 5, reset it
             if (hitCounter == 5)
             {
-              player.x = 20;
+              player.x = 500;
               hitCounter = 0;
               hitText.text("Hit: " + hitCounter);
             }
@@ -68,7 +68,7 @@ function drop()
 
         // When it hit the floor, destroy it
         .bind("EnterFrame", function() {
-            if (this.y > screenHeight-30)
+            if (this.y > canvasHeight-30)
               this.destroy();
         });
 }
