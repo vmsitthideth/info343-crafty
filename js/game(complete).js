@@ -12,7 +12,7 @@ $(document).ready(function() {
     Crafty.background("black");
 
     // Creeate player entity
-    var player = Crafty.e("Player,2D, Canvas, Color, Twoway, Gravity")
+    var player = Crafty.e("Player,2D, Canvas, Color, Twoway, Gravity, Collision")
         .color("yellow")
         .twoway(10)
         .gravity('Floor')
@@ -20,7 +20,7 @@ $(document).ready(function() {
         .attr({w:50, h:50, x:10, y:320})
 
     // Create floor entity
-    var floor = Crafty.e("Floor,2D, Canvas, Color")
+    var floor = Crafty.e("Floor,2D, Canvas, Color, Collision")
         .color("gray")
         .attr({h:30, w:1000, x:0, y:370 })
 
