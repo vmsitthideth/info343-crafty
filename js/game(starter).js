@@ -26,30 +26,60 @@ $(document).ready(function() {
 
 
     // Create text that shows hit count with text font size 30px and bold at position of x: canvasWidth - 70, y:10
+    var hitText = Crafty.e('2D, DOM, Text')
+        .textColor('white')
+        .attr({
+            x: canvasWidth - 70,
+            y: 10
+        })
+        .textFont({
+            size: "30px",
+            weight: 'bold'
+        })
+        .text('Hit:' + hitCounter)
 
-
-
-
+drop();
 // Rain dropping function
 function drop()
 {   
     // Randomize the x-postition of the rain drop
-    
+    var randomx = Math.floor(Math.random() * canvasWidth);
 
     // Create rain drop entity
-    
-
+    Crafty.e('Drop, 2D, Canvas, Color, Gravity, Collision')
+        .attr({x: randomx, y:0, w: 2, h: 15})
+        .color('white')
+        .gravity()
+        .gravityConst(0.5)
         // When a rain drop hit the Player, increase the hit counter
+        .checkHits('Player')
+        .bind("HitOn", function() {
+            this.destroy();
+            hitCounter++;
+            hitText.text("Hit: " + hitCounter);
         
             // if the hit counter becomes 5, reset the counter and reset the position of the player
-            
-
+            if(hitCounter == 5) {
+                box.x = 500;
+                hitCounter = 0;
+                hitText.text("Hit: " + hitCounter);
+            }
+    })
         // When it hit the floor, destroy it
+        .bind("EnterFrame", function() {
+            if(this.y + 15 > canvasHeight-10) {
+                this.destroy();
+            }
+        })
         
 }
 
 // Call "drop" function in order to create many rain drops
-
+Crafty.bind("EnterFrame", function() {
+    if(Crafty.frame() % 4 == 0) {
+        drop();
+    }
+})
 
 });
 
