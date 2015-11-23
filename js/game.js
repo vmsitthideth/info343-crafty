@@ -1,20 +1,31 @@
 'use strict';
 
-    var screenWidth = 1000;
-    var screenHeight = 400;
+    var canvasWidth = 1000;
+    var canvasHeight = 400;
     var hitCounter = 0;
 
 // When the DOM has loaded
 $(document).ready(function() {
 
     // Initialize Crafty
-    Crafty.init(screenWidth,screenHeight,document.getElementById('game'));
+    Crafty.init(canvasWidth,canvasHeight,document.getElementById('game'));
     Crafty.background("black");
 
-    // Creeate player entity with w:50, h:50 at position of x:500, y,320
-   
-    // Create floor entity with w:900, h:30 at position of x:50, y:370
-   
+    // The box entity
+    var box = Crafty.e('Player, 2D, DOM, Color, Twoway, Gravity')
+        .attr({x: 500, y: 0, w: 40, h: 40})
+        .color('yellow') 
+        .twoway(10)
+        .gravity('Floor')
+        .gravityConst(3);
+
+
+    // The floor entity
+    var floor = Crafty.e('Floor,2D, Canvas, Color')
+        .attr({x: 100, y: canvasHeight-10, w: 800, h: 10})
+        .color('gray'); 
+
+
     // Create text that shows hit count with text font size 30px and bold at position of x: screenHeight - 30, y:10
     
 

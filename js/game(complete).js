@@ -8,24 +8,24 @@
 $(document).ready(function() {
 
     // Initialize Crafty
-    Crafty.init(canvasWidth,canvasHeight).canvas.init();
+    Crafty.init(canvasWidth,canvasHeight,document.getElementById('game'));
     Crafty.background("black");
 
-    // Creeate player entity
-    var player = Crafty.e("Player,2D, Canvas, Color, Twoway, Gravity")
-        .color("yellow")
+    //  The box entity
+    var box = Crafty.e('Player, 2D, DOM, Color, Twoway, Gravity')
+        .attr({x: 500, y: 0, w: 40, h: 40})
+        .color('yellow') 
         .twoway(10)
         .gravity('Floor')
-        .gravityConst(3)
-        .attr({w:50, h:50, x:500, y:320})
+        .gravityConst(3);
 
-    // Create floor entity
-    var floor = Crafty.e("Floor,2D, Canvas, Color")
-        .color("gray")
-        .attr({w:900, h:30,  x:50, y:370 })
-
+    // The floor entity
+    var floor = Crafty.e('Floor,2D, Canvas, Color')
+        .attr({x: 100, y: canvasHeight-10, w: 800, h: 10})
+        .color('gray'); 
+ 
     // Create text that shows hit count
-    var hitText = Crafty.e('2D, DOM, Text')
+    var hitText = Crafty.e('2D, DOM, Text') 
         .textColor('white')
         .text('Hit:' + hitCounter)
         .attr({
@@ -60,23 +60,24 @@ function drop()
             // if the hit counter becomes 5, reset it
             if (hitCounter == 5)
             {
-              player.x = 500;
+              box.x = 500;
               hitCounter = 0;
               hitText.text("Hit: " + hitCounter);
             }
         })
 
-        // When it hit the floor, destroy it
+        // For each frame, check if it hit the floor. If it does, destroy it
         .bind("EnterFrame", function() {
             if (this.y > canvasHeight-30)
               this.destroy();
         });
 }
 
-// Call "drop" function in order to create many rain drops
+// For each frame, check if the frame number is the multiple of 4. If it is, then create call drop() funciton 
 Crafty.bind("EnterFrame", function(){
-   if (Crafty.frame() % 4 == 0)
-    drop();
+   if (Crafty.frame() % 4 == 0) {
+        drop();
+   }
 });
 
 
