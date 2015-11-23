@@ -19,15 +19,16 @@ $(document).ready(function() {
         .gravity('Floor')
         .gravityConst(3);
 
-
     // The floor entity
     var floor = Crafty.e('Floor,2D, Canvas, Color')
         .attr({x: 100, y: canvasHeight-10, w: 800, h: 10})
         .color('gray'); 
 
 
-    // Create text that shows hit count with text font size 30px and bold at position of x: screenHeight - 30, y:10
-    
+    // Create text that shows hit count with text font size 30px and bold at position of x: canvasWidth - 70, y:10
+
+
+
 
 // Rain dropping function
 function drop()
@@ -36,11 +37,12 @@ function drop()
     
 
     // Create rain drop entity
-   
+    
 
         // When a rain drop hit the Player, increase the hit counter
-            
+        
             // if the hit counter becomes 5, reset the counter and reset the position of the player
+            
 
         // When it hit the floor, destroy it
         
